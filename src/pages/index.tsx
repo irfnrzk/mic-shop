@@ -19,10 +19,10 @@ export interface IndexProps {
 
 export default function Index({ microphones }: IndexProps) {
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={3}>
       {microphones.map(mic => {
         return (
-          <Grid container item xs={12} sm={6} spacing={3}>
+          <Grid item xs={12} sm={3} key={mic.id}>
             <Link href="/microphone/[id]" as={`/microphone/${mic.id}`}>
               <a>
                 <Card>
@@ -30,7 +30,7 @@ export default function Index({ microphones }: IndexProps) {
                     <CardMedia
                       component="img"
                       alt={mic.model + ' ' + mic.brand}
-                      height="200"
+                      height="300"
                       image={mic.imageUrl}
                       title={mic.model + ' ' + mic.brand}
                     />
@@ -55,8 +55,15 @@ export default function Index({ microphones }: IndexProps) {
 }
 
 export const getStaticProps: GetStaticProps = async ctx => {
+  const currentPage = ctx.params?.currentPage as string;
+  const currentPageNumber = +(currentPage || 0);
+
+  const min = currentPageNumber * 5;
+  const max = (currentPageNumber + 1) * 5;
+
+
   const db = await openDB();
-  const microphones = await db.all('select * from microphone');
+  const microphones = await db.all('select * from microphone where id > ? and id <= ?', min, max);
 
   return { props: { microphones } };
 }

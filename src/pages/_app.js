@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Box from '@material-ui/core/Box'
+import { Container } from '@material-ui/core';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -35,7 +36,7 @@ export default function MyApp(props) {
           <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="dense" >
+          <Typography variant="h6" >
             Microphone Shop
           </Typography>
         </Toolbar>
@@ -43,8 +44,11 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Box marginTop={8}></Box>
-        <Component {...pageProps} />
+        <Container>
+          <Box marginTop={10}>
+            <Component {...pageProps} />
+          </Box>
+        </Container>
       </ThemeProvider>
     </React.Fragment>
   );
